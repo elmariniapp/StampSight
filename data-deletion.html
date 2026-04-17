@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Deletion Request — StampSight</title>
+  <meta name="description" content="How to request data deletion for StampSight." />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-accent: #eef3ff;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: rgba(255, 255, 255, 0.92);
+      --text: #0f172a;
+      --muted: #5b6475;
+      --line: rgba(15, 23, 42, 0.08);
+      --line-strong: rgba(15, 23, 42, 0.12);
+      --primary: #2563eb;
+      --primary-soft: rgba(37, 99, 235, 0.10);
+      --success: #0f766e;
+      --success-soft: rgba(15, 118, 110, 0.10);
+      --warning: #9a6700;
+      --warning-soft: rgba(154, 103, 0, 0.10);
+      --shadow-lg: 0 20px 60px rgba(15, 23, 42, 0.10);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.07);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 28%),
+        radial-gradient(circle at top right, rgba(14, 165, 233, 0.10), transparent 26%),
+        linear-gradient(180deg, #f8faff 0%, #f4f7fb 48%, #eef3f9 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 20px 56px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin: 0 auto 22px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(14, 165, 233, 0.10)),
+        #ffffff;
+      border: 1px solid rgba(37, 99, 235, 0.12);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+      flex-shrink: 0;
+    }
+
+    .brand svg {
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 2px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 180ms ease;
+    }
+
+    .nav-pill:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+      border-color: rgba(37, 99, 235, 0.22);
+      background: rgba(255,255,255,0.94);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 34px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.88), rgba(255,255,255,0.70)),
+        linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(14, 165, 233, 0.06));
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 24px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(24px);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 240px;
+      height: 240px;
+      right: -60px;
+      top: -60px;
+      background: rgba(37, 99, 235, 0.10);
+    }
+
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      left: -40px;
+      bottom: -50px;
+      background: rgba(14, 165, 233, 0.10);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      max-width: 9.5ch;
+    }
+
+    .hero p.lead {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.65;
+      color: #334155;
+      max-width: 64ch;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .hero-card {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: 180ms ease;
+      border: 1px solid transparent;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.22);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.82);
+      border-color: var(--line);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(22px, 3vw, 28px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      margin: 0 0 14px;
+      color: #334155;
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .subtle {
+      color: var(--muted);
+    }
+
+    .highlight,
+    .note,
+    .success {
+      border-radius: 18px;
+      padding: 18px 18px 18px 18px;
+      border: 1px solid transparent;
+      margin-top: 16px;
+    }
+
+    .highlight {
+      background: var(--primary-soft);
+      border-color: rgba(37, 99, 235, 0.12);
+    }
+
+    .note {
+      background: var(--warning-soft);
+      border-color: rgba(154, 103, 0, 0.12);
+    }
+
+    .success {
+      background: var(--success-soft);
+      border-color: rgba(15, 118, 110, 0.12);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .mini {
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+
+    .mini h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .mini p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    ul {
+      margin: 14px 0 0;
+      padding-left: 20px;
+      color: #334155;
+    }
+
+    li {
+      margin: 10px 0;
+      line-height: 1.7;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .step {
+      position: relative;
+      padding: 18px 18px 18px 58px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid var(--line);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      padding: 24px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+    }
+
+    .footer p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: rgba(15, 23, 42, 0.05);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 10px;
+      padding: 2px 8px;
+      color: #0f172a;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        padding: 16px 14px 40px;
+      }
+
+      .hero,
+      .card {
+        padding: 22px;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .cta-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3l7 3v5c0 4.8-2.9 8.3-7 10-4.1-1.7-7-5.2-7-10V6l7-3z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M9 12.2l2 2 4-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <p class="eyebrow">StampSight</p>
+            <p class="brand-title">Data Deletion Request</p>
+          </div>
+        </div>
+
+        <div class="nav-links">
+          <a class="nav-pill" href="PRIVACY_POLICY.html">Privacy Policy</a>
+          <a class="nav-pill" href="TERMS_OF_USE.html">Terms of Use</a>
+          <a class="nav-pill" href="LEGAL_NOTICE.html">Legal Notice</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Privacy & Compliance</p>
+          <h1>Delete your data, clearly.</h1>
+          <p class="lead">
+            This page explains how users of <strong>StampSight</strong> can delete local data stored on their device and request deletion of eligible backend-supported verification data.
+          </p>
+
+          <div class="hero-meta">
+            <span class="chip">Last updated: April 17, 2026</span>
+            <span class="chip">Publisher: EL MARINI APP</span>
+            <span class="chip">Local-first by design</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="button button-primary" href="mailto:support@elmariniapp.com?subject=StampSight%20Data%20Deletion%20Request">Request deletion by email</a>
+            <a class="button button-secondary" href="#how-to-request">See how it works</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h2>Quick summary</h2>
+          <p>
+            Most StampSight data is stored locally on your device and can usually be removed directly by deleting proofs, exports, app data, or by uninstalling the app.
+          </p>
+          <div class="highlight">
+            <strong>Important:</strong>
+            <p style="margin:8px 0 0;">
+              If you used QR verification or related verification features, some limited verification-related records may also exist on backend services and can be reviewed for deletion on request.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <div class="kicker">1 · Local data on your device</div>
+        <h2>What is stored locally</h2>
+        <p>
+          StampSight is designed with significant local-first behavior. Many records are stored directly on your device to support proof capture, organization, and export workflows.
+        </p>
+
+        <div class="info-grid">
+          <div class="mini">
+            <h3>Examples of local data</h3>
+            <p>Proof records, captured images, PDF exports, derived export images, client/site/mission data, app preferences, and local history records.</p>
+          </div>
+          <div class="mini">
+            <h3>How users can remove it</h3>
+            <p>Delete proofs or exports inside the app where available, clear app data from device settings, or uninstall the app.</p>
+          </div>
+        </div>
+
+        <div class="success">
+          <strong>Most deletion actions are immediate on-device.</strong>
+          <p style="margin:8px 0 0;">
+            Because the app is local-first, many records can be removed directly by the user without waiting for a support request.
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="kicker">2 · Backend-supported verification data</div>
+        <h2>What may exist outside the device</h2>
+        <p>
+          If you use StampSight verification features, limited verification-related records may be processed through backend services used to support QR verification and proof validation workflows.
+        </p>
+
+        <ul>
+          <li>verification identifiers</li>
+          <li>proof identifiers</li>
+          <li>timestamps</li>
+          <li>integrity-related hashes</li>
+          <li>technical records required to operate the verification feature</li>
+        </ul>
+
+        <div class="note">
+          <strong>Limited public display only.</strong>
+          <p style="margin:8px 0 0;">
+            Public verification pages intentionally display only a limited subset of proof-related information. Original source photos and full exported PDF files are not publicly exposed through the verification page.
+          </p>
+        </div>
+      </section>
+
+      <section class="card" id="how-to-request">
+        <div class="kicker">3 · How to request deletion</div>
+        <h2>Request deletion in 3 simple steps</h2>
+        <p>
+          If you want to request deletion of eligible backend-supported verification data or need privacy assistance, contact us using the method below.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <strong>Send your request by email</strong>
+            Contact <a href="mailto:support@elmariniapp.com">support@elmariniapp.com</a> with the subject:
+            <span class="mono">StampSight Data Deletion Request</span>
+          </div>
+          <div class="step">
+            <strong>Include identifying details</strong>
+            Mention the app name <strong>StampSight</strong>, the reason for your request, and any proof or verification reference that helps identify the relevant record.
+          </div>
+          <div class="step">
+            <strong>We review and process the request</strong>
+            We will review the request within a reasonable time and process eligible deletion as soon as reasonably practical, subject to verification and legitimate retention needs.
+          </div>
+        </div>
+
+        <div class="highlight">
+          <strong>Contact details</strong>
+          <p style="margin:8px 0 0 0;">
+            <strong>EL MARINI APP</strong><br />
+            Email: <a href="mailto:support@elmariniapp.com">support@elmariniapp.com</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="kicker">4 · What may be deleted or retained</div>
+        <h2>Deletion scope</h2>
+        <p>
+          Depending on the request and the data involved:
+        </p>
+
+        <ul>
+          <li>local data can usually be deleted directly by the user from the device</li>
+          <li>eligible backend-supported verification data may be deleted upon request</li>
+          <li>some limited data may be retained where reasonably necessary for legal obligations, security, fraud prevention, abuse prevention, troubleshooting, or service integrity</li>
+        </ul>
+
+        <div class="info-grid">
+          <div class="mini">
+            <h3>Usually deletable</h3>
+            <p>Local proofs, local exports, app data on the device, and eligible backend-supported verification records when identified and applicable.</p>
+          </div>
+          <div class="mini">
+            <h3>May be retained</h3>
+            <p>Limited technical or compliance-related data where retention is reasonably necessary for security, abuse prevention, legal obligations, or service integrity.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="kicker">5 · Retention and timing</div>
+        <h2>How long it can take</h2>
+        <p>
+          We review deletion requests within a reasonable time. Where deletion applies, we process the request as soon as reasonably practical, subject to request verification, technical feasibility, and any legitimate retention needs described on this page.
+        </p>
+        <p class="subtle">
+          If additional information is needed to identify the relevant record, we may ask for reasonable details necessary to understand and process the request.
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="kicker">6 · Related legal documents</div>
+        <h2>Related pages</h2>
+        <p>
+          For more information about privacy, use, and legal context, please review the related pages below.
+        </p>
+
+        <div class="cta-row">
+          <a class="button button-secondary" href="PRIVACY_POLICY.html">Privacy Policy</a>
+          <a class="button button-secondary" href="TERMS_OF_USE.html">Terms of Use</a>
+          <a class="button button-secondary" href="LEGAL_NOTICE.html">Legal Notice</a>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>
+        <strong>StampSight</strong> is published by <strong>EL MARINI APP</strong>. This page is provided for transparency and privacy support purposes. It should be read together with the Privacy Policy, Terms of Use, and Legal Notice applicable to the app.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
